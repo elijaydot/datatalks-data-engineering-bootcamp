@@ -1,0 +1,5 @@
+gcp-credentials.json
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
