@@ -1,5 +1,5 @@
-project_id      = "de-zoomcamp-2026-485521"
+project_id      = "de-zoomcamp-2026-485916"
 region          = "us-central1"
 location        = "US"
-gcs_bucket_name = "de-zoomcamp-bucket-eli-12345"
+gcs_bucket_name = "de-zoomcamp-2026-485916"
 bq_dataset_name = "ny_taxi_data"

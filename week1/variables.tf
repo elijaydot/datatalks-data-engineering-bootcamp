@@ -1,7 +1,7 @@
 variable "project_id" {
-  description = "de-zoomcamp-2026-485521"
+  description = "de-zoomcamp-2026-485916"
   type        = string
-  default     = "de-zoomcamp-2026-485521" # Replace with your actual project ID
+  default     = "de-zoomcamp-2026-485916" # Replace with your actual project ID
 }
 
 variable "region" {
@@ -25,7 +25,7 @@ variable "credentials_file" {
 variable "gcs_bucket_name" {
   description = "Name of the GCS bucket (must be globally unique)"
   type        = string
-  default     = "de-zoomcamp-bucket-eli-12345" # Change to make it unique
+  default     = "de-zoomcamp-2026-485916" # Change to make it unique
 }
 
 variable "bq_dataset_name" {
