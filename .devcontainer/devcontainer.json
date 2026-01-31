@@ -1,0 +1,46 @@
+{
+  "name": "Data Engineering Bootcamp",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "forwardPorts": [
+    8080,
+    8081,
+    8085,
+    5432
+  ],
+  "portAttributes": {
+    "8080": {
+      "label": "Kestra UI",
+      "onAutoForward": "notify"
+    },
+    "8081": {
+      "label": "Kestra Management",
+      "onAutoForward": "notify"
+    },
+    "8085": {
+      "label": "pgAdmin",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "notify"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-vscode.makefile-tools",
+        "ms-vscode-remote.remote-containers",
+        "github.copilot",
+        "github.copilot-chat",
+        "github.vscode-pull-request-github"
+      ]
+    }
+  },
+  "remoteUser": "root",
+  "postCreateCommand": "apt-get update && apt-get install -y docker-compose"
+}

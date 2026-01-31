@@ -9,11 +9,14 @@ A hands-on exploration of data engineering essentials using NYC Green Taxi trip 
 ## Table of Contents
 
 - [Overview](#overview)
+- [The Foundation](#the-foundation)
 - [Tech Stack](#tech-stack)
 - [Setup & Prerequisites](#setup--prerequisites)
 - [Questions & Solutions](#questions--solutions)
+- [Week 1 Assignment](#week-1-assignment)
 - [Project Structure](#project-structure)
 - [Key Learnings](#key-learnings)
+- [Resources](#resources)
 
 ---
 
@@ -32,16 +35,31 @@ This project covers the foundational concepts of modern data engineering:
 
 ---
 
+## The Foundation
+
+Week 1 is where the journey begins. We start with a real-world problem: analyzing over 82,000 taxi trips across New York City using modern data engineering practices. But this isn't just about querying a database. It's about building the entire infrastructure from the ground up.
+
+Think of it like constructing a building: we're not just moving into a finished apartment. We're learning to lay the foundation, build the walls, install the plumbing, wire the electricity, and then finally arrange the furniture. Each step teaches us something essential about how data flows through a system.
+
+By the end of Week 1, you'll understand:
+- How to containerize applications so they run the same everywhere (Docker)
+- How to manage databases that store your data reliably (PostgreSQL)
+- How to write queries that ask meaningful questions of your data (SQL)
+- How to provision cloud infrastructure programmatically (Terraform)
+- How to think like a data engineer: with systems thinking, not just coding skills
+
+---
+
 ## Tech Stack
 
-| Technology | Purpose |
-|------------|---------|
-| **Docker** | Containerization & environment management |
-| **PostgreSQL** | Relational database for data storage |
-| **pgAdmin** | Database administration interface |
-| **Python** | Data loading and transformation |
-| **Terraform** | Infrastructure provisioning |
-| **GCP** | Cloud storage (GCS) & data warehouse (BigQuery) |
+| Technology | Purpose | Why It Matters |
+|------------|---------|---|
+| **Docker** | Containerization & environment management | "It works on my machine" stops being an excuse |
+| **PostgreSQL** | Relational database for data storage | The most battle-tested open-source database |
+| **pgAdmin** | Database administration interface | Visual tool to understand your data |
+| **Python** | Data loading and transformation | The lingua franca of data engineering |
+| **Terraform** | Infrastructure provisioning | Reproducible infrastructure, version controlled |
+| **GCP** | Cloud storage (GCS) & data warehouse (BigQuery) | Scalable solutions for real-world problems |
 
 ---
 
@@ -203,6 +221,18 @@ LIMIT 1;
 
 ---
 
+## Week 1 Assignment
+
+Ready to test your newfound knowledge? Here's your challenge:
+
+[Data Engineering Zoomcamp - Week 1 Homework](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/2026/01-docker-terraform/homework.md)
+
+**Assignment File**: `load_data.py`
+
+This assignment brings everything together. You'll work with Docker containers, load real data into PostgreSQL, write SQL queries to answer specific questions, and provision infrastructure on Google Cloud Platform. By completing this assignment, you'll have built a complete end-to-end data engineering pipeline—a skill that's immediately applicable in the real world.
+
+---
+
 ## Project Structure
 
 ```
@@ -239,22 +269,35 @@ Week1/
 ✅ Understanding container networking and service communication  
 ✅ Using docker-compose for multi-container orchestration  
 ✅ Distinguishing between host ports and container ports  
+✅ Building reproducible environments that work across different machines
 
 ### SQL & Database Design
 ✅ Writing efficient queries with proper filtering and indexing  
 ✅ Performing complex JOINs across multiple tables  
 ✅ Using aggregation functions (SUM, COUNT, MAX) with GROUP BY  
 ✅ Implementing data quality checks and outlier removal  
+✅ Understanding how to think in relational terms
 
 ### Data Engineering Best Practices
 ✅ Loading large datasets in chunks to manage memory  
 ✅ Implementing proper error handling and progress tracking  
 ✅ Using connection pooling and batch operations  
+✅ Planning for scalability from day one
 
 ### Infrastructure as Code
 ✅ Provisioning cloud resources with Terraform  
 ✅ Managing state and applying infrastructure changes  
 ✅ Following security best practices (service accounts, IAM roles)  
+✅ Making infrastructure version-controllable and reproducible
+
+### Systems Thinking
+The biggest takeaway from Week 1 isn't just the individual technologies—it's how they work together. You've learned that data engineering is about building systems where:
+- Data flows reliably from source to storage
+- The infrastructure is reproducible and scalable
+- Each component has a clear purpose
+- Everything is documented and version-controlled
+
+This systems perspective is what separates data engineers from script writers.
 
 ---
 
@@ -264,16 +307,16 @@ Week1/
 - [Docker Documentation](https://docs.docker.com/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 - [Terraform GCP Provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs)
+- [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)
 
 ---
 
-## Notes
+## Moving Forward
 
-- All SQL queries are optimized for readability and performance
-- Data loading uses chunked processing for scalability
-- Terraform configuration follows GCP best practices
-- Environment variables and credentials are properly secured
+Week 1 is your foundation. The concepts you've learned here—containerization, database management, SQL querying, and infrastructure provisioning—are universal principles that apply whether you're working with Terraform or Kubernetes, PostgreSQL or Snowflake, Docker or Podman.
+
+As you move to Week 2 and beyond, you'll build upon these fundamentals, adding workflow orchestration, streaming data, and advanced cloud architectures. But remember: every complex data engineering system started exactly where you are now.
 
 ---
 
-*Week 1 of Data Engineering Zoomcamp | NYC Taxi Data Analysis*
+*Week 1 of Data Engineering Zoomcamp | NYC Taxi Data Analysis | Building the Foundation*

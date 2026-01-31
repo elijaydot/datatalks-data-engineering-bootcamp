@@ -1,5 +1,7 @@
 *.parquet
 
+# GCP credentials
+week2/secrets/gcp-credentials.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

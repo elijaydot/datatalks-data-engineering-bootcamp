@@ -11,7 +11,7 @@ Here you'll find code, notes, and solutions for each module as I progress throug
 | Week | Topic | Status | Link |
 | :--- | :--- | :---: | :---: |
 | **Week 1** | **Containerization & Infrastructure as Code** | ✅ Done | [View Folder](./week1/) |
-| **Week 2** | Workflow Orchestration | ⏳ Pending | - |
+| **Week 2** | **Workflow Orchestration** | ✅ Done | [View Folder](./week2/) |
 | **Week 3** | Data Warehouse | ⏳ Pending | - |
 | **Week 4** | Analytics Engineering | ⏳ Pending | - |
 | **Week 5** | Batch Processing | ⏳ Pending | - |
@@ -31,6 +31,16 @@ In the first week, we established the foundational infrastructure for data engin
 - **Database**: Ingested NYC Green Taxi data (Nov 2025) into Postgres.
 - **SQL Analysis**: Performed complex queries to analyze trip records.
 - **IaC**: Provisioned cloud resources (GCS, BigQuery) on Google Cloud Platform using Terraform.
+
+### [Week 2: Workflow Orchestration](./week2/)
+> **Focus**: Kestra, Workflow Automation, Development Environment Configuration
+
+Building on the foundational infrastructure, week two focuses on orchestrating data pipelines and automating workflows.
+- **Environment Setup**: Optimized development container with Visual Studio Code extensions for seamless collaboration.
+- **Security First**: Implemented proper credential management with gitignore for sensitive Google Cloud Platform credentials.
+- **Workflow Automation**: Learned to build and deploy data pipelines using Kestra workflow orchestration platform.
+- **YAML Workflows**: Defined complex data pipelines through version-controlled YAML configurations.
+- **Local Development**: Set up comprehensive local development environment with port forwarding for Kestra, PostgreSQL, and pgAdmin.
 
 ---
 
