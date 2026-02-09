@@ -293,7 +293,3 @@ FROM yellow_taxi_data_wk3.yellow_taxi_regular_table;
 - [NYC TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
 - [Parquet File Format](https://parquet.apache.org/)
 - [BigQuery Best Practices](https://cloud.google.com/bigquery/docs/best-practices-performance-overview)
-
-## Author
-`Elijah Aremu`  
-Data Engineering Zoomcamp 2026 - Week 3 Homework
