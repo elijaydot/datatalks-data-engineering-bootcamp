@@ -1,0 +1,8 @@
+[project]
+name = "week3-data-loading"
+version = "0.1.0"
+description = "Load yellow taxi data to GCP"
+requires-python = ">=3.10"
+dependencies = [
+    "google-cloud-storage>=2.0.0",
+]

@@ -12,7 +12,7 @@ Here you'll find code, notes, and solutions for each module as I progress throug
 | :--- | :--- | :---: | :---: |
 | **Week 1** | **Containerization & Infrastructure as Code** | ✅ Done | [View Folder](./week1/) |
 | **Week 2** | **Workflow Orchestration** | ✅ Done | [View Folder](./week2/) |
-| **Week 3** | Data Warehouse | ⏳ Pending | - |
+| **Week 3** | **Data Warehousing & BigQuery** | ✅ Done | [View Folder](./week3/) |
 | **Week 4** | Analytics Engineering | ⏳ Pending | - |
 | **Week 5** | Batch Processing | ⏳ Pending | - |
 | **Week 6** | Stream Processing | ⏳ Pending | - |
@@ -41,6 +41,17 @@ Building on the foundational infrastructure, week two focuses on orchestrating d
 - **Workflow Automation**: Learned to build and deploy data pipelines using Kestra workflow orchestration platform.
 - **YAML Workflows**: Defined complex data pipelines through version-controlled YAML configurations.
 - **Local Development**: Set up comprehensive local development environment with port forwarding for Kestra, PostgreSQL, and pgAdmin.
+
+### [Week 3: Data Warehousing & BigQuery](./week3/)
+> **Focus**: Data Warehousing, BigQuery, Cloud Storage, Table Optimization
+
+Exploring data warehousing concepts using Google BigQuery and Cloud Storage with NYC Yellow Taxi data.
+- **Data Ingestion**: Developed Python script to download and upload 6 months of taxi trip data (20M+ records) to Google Cloud Storage in parallel using ThreadPoolExecutor.
+- **External Tables**: Created external tables in BigQuery that reference parquet files in GCS without duplicating data.
+- **Materialized Tables**: Built materialized tables in BigQuery's native columnar format for improved query performance.
+- **Table Optimization**: Implemented partitioning by `tpep_dropoff_datetime` and clustering by `VendorID` to optimize query performance and reduce data scanned.
+- **BigQuery Insights**: Learned columnar storage benefits, metadata optimization, and cost-efficient query patterns.
+- **Performance Tuning**: Demonstrated dramatic performance improvements through partitioning (reducing data scanned from 310MB to 27MB on date-range queries).
 
 ---
 
