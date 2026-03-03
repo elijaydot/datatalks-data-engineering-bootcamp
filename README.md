@@ -14,7 +14,7 @@ Here you'll find code, notes, and solutions for each module as I progress throug
 | **Week 2** | **Workflow Orchestration** | ✅ Done | [View Folder](./week2/) |
 | **Week 3** | **Data Warehousing & BigQuery** | ✅ Done | [View Folder](./week3/) |
 | **Week 4** | **Analytics Engineering (dbt)** | ✅ Done | [View Folder](./week4/) |
-| **Week 5** | Batch Processing | ⏳ Pending | - |
+| **Week 5** | **Batch Processing (Bruin & DuckDB)** | ✅ Done | [View Folder](./week5/) |
 | **Week 6** | Stream Processing | ⏳ Pending | - |
 | **Week 7** | Project | ⏳ Pending | - |
 | **Week 8** | Project | ⏳ Pending | - |
@@ -63,6 +63,16 @@ In week four, I used dbt to structure analytics-ready models on top of taxi data
 - **Debugging**: Resolved BigQuery SQL issues involving data types, `date_trunc` syntax, and `UNION ALL` type alignment.
 - **Validation**: Confirmed successful model execution after fixes.
 
+### Week 5: Declarative Data Pipelines with Bruin & DuckDB
+> **Focus**: Bruin, DuckDB, ELT, Data Quality, Local Development
+
+In week five, we shifted to building a modern, local-first ELT pipeline using Bruin and DuckDB.
+- **Declarative Pipelines**: Defined data assets (Python, SQL, Seeds) with embedded configuration (`@bruin` tags) for dependencies and materialization.
+- **Ingestion**: Built Python assets to dynamically fetch and standardize NYC Taxi parquet data from public sources.
+- **Transformation**: Implemented SQL-based staging and reporting layers with incremental materialization strategies (`time_interval`).
+- **Data Quality**: Integrated in-line quality checks (`not_null`, `unique`, `non_negative`) directly within asset definitions.
+- **Orchestration**: Managed the full pipeline lifecycle (validate, run, lineage) using the Bruin CLI and local DuckDB storage.
+
 ---
 
 ## Tech Stack
@@ -71,4 +81,4 @@ In week four, I used dbt to structure analytics-ready models on top of taxi data
 - **Containerization**: Docker, Docker Compose
 - **Infrastructure**: Terraform
 - **Cloud**: Google Cloud Platform (GCP)
-- **Database**: PostgreSQL, BigQuery
+- **Database**: PostgreSQL, BigQuery, DuckDB

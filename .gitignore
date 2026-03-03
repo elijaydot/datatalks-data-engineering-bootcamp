@@ -8,6 +8,11 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Ignore the DuckDB database file and its write-ahead log.
+# These are build artifacts and can become very large.
+duckdb.db
+duckdb.db.wal
+
 # C extensions
 *.so
 
@@ -210,3 +215,8 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+.bruin.yml
+logs/runs
+logs/*.log
+*.py[cod]

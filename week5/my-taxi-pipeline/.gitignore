@@ -1,0 +1,25 @@
+# Bruin & Database Artifacts
+# Ignore the main configuration file which may contain secrets
+.bruin.yml
+
+# Ignore the DuckDB database file and its write-ahead log.
+# These are build artifacts and can become very large.
+duckdb.db
+duckdb.db.wal
+
+# Python
+# Ignore virtual environments
+.venv/
+venv/
+
+# Ignore Python cache files and compiled files
+__pycache__/
+*.pyc
+
+# IDE & Editor specific
+.vscode/
+.idea/
+
+# OS-specific
+.DS_Store
+Thumbs.db
