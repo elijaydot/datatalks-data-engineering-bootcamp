@@ -1,0 +1,34 @@
+
+# Name your project! Project names should be lowercase and use underscores as spaces.
+name: 'taxi_rides_ny'
+version: '1.0.0'
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'taxi_rides_ny'
+
+# These configurations specify where dbt should look for different types of files.
+# The `source-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analysis"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+packages-install-path: "dbt_packages_local"
+
+target-path: "target"  # directory which will store compiled SQL files
+clean-targets:
+  - "target"        # this is a directory which will store compiled SQL files
+  - "dbt_packages"  # this directory will contain dbt packages
+  - "dbt_packages_local"  # alternate packages directory for local permissions issues
+
+models:
+  taxi_rides_ny:
+    staging:
+      +materialized: view
+    core:
+      +materialized: table
+
+require-dbt-version: ">=1.0.0"

@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: prod
+    database: de-zoomcamp-2026-485916
+    schema: prod
+    tables:
+      - name: yellow_tripdata
+        description: "Yellow taxi trip data for 2019-2020"
+      - name: green_tripdata
+        description: "Green taxi trip data for 2019-2020"
+      - name: fhv_tripdata
+        description: "For-Hire Vehicle trip data for 2019"

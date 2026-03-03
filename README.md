@@ -13,7 +13,7 @@ Here you'll find code, notes, and solutions for each module as I progress throug
 | **Week 1** | **Containerization & Infrastructure as Code** | ✅ Done | [View Folder](./week1/) |
 | **Week 2** | **Workflow Orchestration** | ✅ Done | [View Folder](./week2/) |
 | **Week 3** | **Data Warehousing & BigQuery** | ✅ Done | [View Folder](./week3/) |
-| **Week 4** | Analytics Engineering | ⏳ Pending | - |
+| **Week 4** | **Analytics Engineering (dbt)** | ✅ Done | [View Folder](./week4/) |
 | **Week 5** | Batch Processing | ⏳ Pending | - |
 | **Week 6** | Stream Processing | ⏳ Pending | - |
 | **Week 7** | Project | ⏳ Pending | - |
@@ -52,6 +52,16 @@ Exploring data warehousing concepts using Google BigQuery and Cloud Storage with
 - **Table Optimization**: Implemented partitioning by `tpep_dropoff_datetime` and clustering by `VendorID` to optimize query performance and reduce data scanned.
 - **BigQuery Insights**: Learned columnar storage benefits, metadata optimization, and cost-efficient query patterns.
 - **Performance Tuning**: Demonstrated dramatic performance improvements through partitioning (reducing data scanned from 310MB to 27MB on date-range queries).
+
+### [Week 4: Analytics Engineering (dbt)](./week4/)
+> **Focus**: dbt Modeling, Seeds, Data Testing, BigQuery Compatibility
+
+In week four, I used dbt to structure analytics-ready models on top of taxi datasets.
+- **Modeling Layers**: Built staging and core models (`stg_*`, `fct_trips`, `dim_zones`, `fct_monthly_zone_revenue`).
+- **Seed Management**: Loaded `taxi_zone_lookup` as seed data for dimensional joins.
+- **Execution**: Ran targeted builds and dependency-based runs with dbt selectors.
+- **Debugging**: Resolved BigQuery SQL issues involving data types, `date_trunc` syntax, and `UNION ALL` type alignment.
+- **Validation**: Confirmed successful model execution after fixes.
 
 ---
 

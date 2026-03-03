@@ -1,0 +1,16 @@
+# Week 4 secrets
+**/gcp-credentials.json
+
+# dbt artifacts
+taxi_rides_ny/target/
+taxi_rides_ny/logs/
+taxi_rides_ny/dbt_packages/
+taxi_rides_ny/dbt_packages_local/
+
+# Local environments
+taxi_rides_ny/.venv/
+
+# Local data and scratch files
+taxi_rides_ny/data/
+taxi_rides_ny/*.duckdb
+taxi_rides_ny/.ipynb_checkpoints/
