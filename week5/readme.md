@@ -68,6 +68,67 @@ Bruin will automatically validate the assets, build the dependency graph, and ru
 
 ---
 
+## Troubleshooting Notes (What Failed and What Worked)
+
+This section documents the actual issues we hit and the fixes that worked.
+
+### 1) Memory issue during large full refresh
+
+**What happened**
+- Running `bruin run ./pipeline/pipeline.yml --full-refresh` without date limits used the full interval from `2022-01-01` to current date.
+- The `ingestion.trips` asset tried to read many monthly parquet files and concatenate them into one large pandas DataFrame.
+- This caused `numpy._core._exceptions._ArrayMemoryError` (out-of-memory) during `pd.concat(...)`.
+
+**Why this happened**
+- Too many months were loaded in a single run.
+- Even though missing future months were skipped (403), the in-memory concatenation of available months was still too large.
+
+**Fix applied**
+- In `pipeline/assets/ingestion/trips.py`:
+	- Added a guardrail `max_months_per_run` (default `3`) and fail-fast error for oversized intervals.
+	- Added an availability cap for TLC data (up to `2025-11`).
+	- Reduced memory pressure by trimming to required columns before appending monthly dataframes.
+
+### 2) Windows PowerShell variable parsing issue
+
+**What happened**
+- In the backfill script, passing `--var taxi_types=["yellow"]` failed on PowerShell.
+- Bruin received `taxi_types=[yellow]` (quotes stripped), which is invalid JSON.
+
+**Fix applied**
+- In `scripts/backfill_monthly.ps1`:
+	- Made `TaxiTypesJson` optional instead of always passing it.
+	- By default, the script now relies on `taxi_types` from `pipeline/pipeline.yml`.
+	- Keeps `--var max_months_per_run=...` so ingestion guardrails remain active.
+
+### 3) Safe backfill approach that worked
+
+Use monthly chunks instead of one large full-refresh:
+
+```powershell
+./scripts/backfill_monthly.ps1 -StartDate 2022-01-01 -EndDate 2022-03-31 -DryRun
+```
+
+Then run for real:
+
+```powershell
+./scripts/backfill_monthly.ps1 -StartDate 2022-01-01 -EndDate 2022-03-31
+```
+
+For one manual small-window run (also verified):
+
+```powershell
+bruin run ./pipeline/pipeline.yml --full-refresh --start-date 2022-01-01 --end-date 2022-02-01
+```
+
+### Practical guidance
+
+- Prefer 1-month or 2-month chunks for stability on local machines.
+- Increase `-MaxMonthsPerRun` only if your machine has enough memory.
+- Keep one initial `--full-refresh`, then run following chunks without full-refresh (handled by the script by default).
+
+---
+
 ## What We Accomplished
 
 -   **Built a Robust Pipeline**: We created a complete, multi-layered data pipeline from scratch.
