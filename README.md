@@ -63,7 +63,7 @@ In week four, I used dbt to structure analytics-ready models on top of taxi data
 - **Debugging**: Resolved BigQuery SQL issues involving data types, `date_trunc` syntax, and `UNION ALL` type alignment.
 - **Validation**: Confirmed successful model execution after fixes.
 
-### Week 5: Declarative Data Pipelines with Bruin & DuckDB
+### [Week 5: Declarative Data Pipelines with Bruin & DuckDB](./week5/)
 > **Focus**: Bruin, DuckDB, ELT, Data Quality, Local Development
 
 In week five, we shifted to building a modern, local-first ELT pipeline using Bruin and DuckDB.
