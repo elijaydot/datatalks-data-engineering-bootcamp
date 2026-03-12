@@ -15,7 +15,7 @@ Here you'll find code, notes, and solutions for each module as I progress throug
 | **Week 3** | **Data Warehousing & BigQuery** | ✅ Done | [View Folder](./week3/) |
 | **Week 4** | **Analytics Engineering (dbt)** | ✅ Done | [View Folder](./week4/) |
 | **Week 5** | **Batch Processing (Bruin & DuckDB)** | ✅ Done | [View Folder](./week5/) |
-| **Week 6** | Stream Processing | ⏳ Pending | - |
+| **Week 6** | **Batch Processing with Spark** | ✅ Done | [View Folder](./week6/) |
 | **Week 7** | Project | ⏳ Pending | - |
 | **Week 8** | Project | ⏳ Pending | - |
 
@@ -72,6 +72,17 @@ In week five, we shifted to building a modern, local-first ELT pipeline using Br
 - **Transformation**: Implemented SQL-based staging and reporting layers with incremental materialization strategies (`time_interval`).
 - **Data Quality**: Integrated in-line quality checks (`not_null`, `unique`, `non_negative`) directly within asset definitions.
 - **Orchestration**: Managed the full pipeline lifecycle (validate, run, lineage) using the Bruin CLI and local DuckDB storage.
+
+### [Week 6: Batch Processing with Spark](./week6/)
+> **Focus**: PySpark, Batch Analytics, Runtime Debugging, Windows Compatibility
+
+In week six, I implemented local batch processing for NYC Yellow Taxi data using Spark and worked through practical environment issues to make the workflow reproducible.
+- **Spark Batch Pipeline**: Ran local Spark jobs with `local[*]`, loaded parquet trip data, and completed homework analytics (trip counts, date filters, duration metrics, and zone-based aggregations).
+- **Script Reliability**: Fixed syntax issues in `test_spark.py` and improved runtime behavior in `week6_spark_homework.py`.
+- **Config Cleanup**: Removed unsupported `uv` config from `week6/pyproject.toml` to eliminate parse warnings.
+- **Java Compatibility**: Resolved Java runtime conflicts by standardizing execution on Java 21 instead of Java 25.
+- **Terminal Stability**: Diagnosed and neutralized global `JAVA_TOOL_OPTIONS` interference that caused inconsistent Spark startup behavior.
+- **Windows Hadoop Edge Case**: Added graceful fallback when parquet write fails due to missing `winutils`/`HADOOP_HOME`, so the script continues and finishes Q3–Q6 successfully.
 
 ---
 
