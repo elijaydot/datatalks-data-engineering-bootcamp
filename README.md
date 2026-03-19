@@ -16,7 +16,7 @@ Here you'll find code, notes, and solutions for each module as I progress throug
 | **Week 4** | **Analytics Engineering (dbt)** | ✅ Done | [View Folder](./week4/) |
 | **Week 5** | **Batch Processing (Bruin & DuckDB)** | ✅ Done | [View Folder](./week5/) |
 | **Week 6** | **Batch Processing with Spark** | ✅ Done | [View Folder](./week6/) |
-| **Week 7** | Project | ⏳ Pending | - |
+| **Week 7** | **Stream Processing with Kafka & Flink** | ✅ Done | [View Folder](./week7/) |
 | **Week 8** | Project | ⏳ Pending | - |
 
 ---
@@ -84,6 +84,16 @@ In week six, I implemented local batch processing for NYC Yellow Taxi data using
 - **Terminal Stability**: Diagnosed and neutralized global `JAVA_TOOL_OPTIONS` interference that caused inconsistent Spark startup behavior.
 - **Windows Hadoop Edge Case**: Added graceful fallback when parquet write fails due to missing `winutils`/`HADOOP_HOME`, so the script continues and finishes Q3–Q6 successfully.
 
+### [Week 7: Stream Processing with Kafka & Flink](./week7/)
+> **Focus**: Redpanda/Kafka, PyFlink, Event-Time Windows, Streaming Sinks
+
+In week seven, I built a full real-time processing pipeline for NYC taxi events and completed the streaming homework end-to-end.
+- **Streaming Pipeline**: Implemented `Producer -> Redpanda (Kafka) -> Flink -> PostgreSQL` using Docker Compose.
+- **Data Producers/Consumers**: Built yellow and green taxi producers plus consumers for validation and PostgreSQL ingestion.
+- **Flink Jobs**: Implemented pass-through ingestion and windowed aggregations (tumbling and session windows) with event-time watermarks.
+- **Homework Execution**: Solved Q1–Q6 using green taxi October 2025 data, including distance filters, location-based windows, session analysis, and hourly tip aggregation.
+- **Operational Learnings**: Documented key production-like issues and fixes, including `NaN -> null` JSON handling, single-partition parallelism (`-p 1`), watermark behavior, and safe rerun/reset workflow.
+
 ---
 
 ## Tech Stack
@@ -93,3 +103,5 @@ In week six, I implemented local batch processing for NYC Yellow Taxi data using
 - **Infrastructure**: Terraform
 - **Cloud**: Google Cloud Platform (GCP)
 - **Database**: PostgreSQL, BigQuery, DuckDB
+- **Streaming**: Apache Flink (PyFlink), Redpanda/Kafka
+- **Tools**: pgAdmin, uv
