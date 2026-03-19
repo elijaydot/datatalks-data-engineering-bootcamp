@@ -1,4 +1,4 @@
-# Week 7 — PyFlink Stream Processing 🚕⚡
+# Week 7 — PyFlink Stream Processing
 
 > *"What if your data never stopped moving?"*
 
