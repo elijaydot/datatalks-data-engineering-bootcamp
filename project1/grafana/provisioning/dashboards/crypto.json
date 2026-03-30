@@ -1,0 +1,352 @@
+{
+  "__inputs": [],
+  "__requires": [],
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+
+    {
+      "id": 1,
+      "title": "BTC/USDT — live price",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 6, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"BTC/USDT\"}",
+        "legendFormat": "BTC/USDT",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": { "mode": "fixed", "fixedColor": "orange" }
+        }
+      }
+    },
+
+    {
+      "id": 2,
+      "title": "ETH/USDT — live price",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 6, "x": 6, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"ETH/USDT\"}",
+        "legendFormat": "ETH/USDT",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": { "mode": "fixed", "fixedColor": "blue" }
+        }
+      }
+    },
+
+    {
+      "id": 3,
+      "title": "SOL/USDT — live price",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 6, "x": 12, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"SOL/USDT\"}",
+        "legendFormat": "SOL/USDT",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": { "mode": "fixed", "fixedColor": "green" }
+        }
+      }
+    },
+
+    {
+      "id": 11,
+      "title": "BNB/USDT — live price",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"BNB/USDT\"}",
+        "legendFormat": "BNB/USDT",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": { "mode": "fixed", "fixedColor": "yellow" }
+        }
+      }
+    },
+
+    {
+      "id": 12,
+      "title": "XRP/USDT — live price",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"XRP/USDT\"}",
+        "legendFormat": "XRP/USDT",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": { "mode": "fixed", "fixedColor": "dark-blue" }
+        }
+      }
+    },
+
+    {
+      "id": 13,
+      "title": "DOGE/USDT — live price",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"DOGE/USDT\"}",
+        "legendFormat": "DOGE/USDT",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": { "mode": "fixed", "fixedColor": "orange" }
+        }
+      }
+    },
+
+    {
+      "id": 4,
+      "title": "All coins — price comparison",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 16 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price",
+        "legendFormat": "{{symbol}}",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": { "unit": "currencyUSD" }
+      }
+    },
+
+    {
+      "id": 5,
+      "title": "Trading volume — all coins",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_volume",
+        "legendFormat": "{{symbol}}",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": { "unit": "short" }
+      }
+    },
+
+    {
+      "id": 6,
+      "title": "Messages sent to Redpanda",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 24 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "rate(producer_messages_sent_total[1m])",
+        "legendFormat": "{{symbol}}",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": { "unit": "msg/s" }
+      }
+    },
+
+    {
+      "id": 7,
+      "title": "Producer errors",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 32 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "sum(producer_errors_total) or vector(0)",
+        "legendFormat": "Errors",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": 0 },
+              { "color": "red",   "value": 1 }
+            ]
+          }
+        }
+      }
+    },
+
+    {
+      "id": 8,
+      "title": "Cassandra — price ticks stored",
+      "type": "stat",
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 32
+      },
+      "datasource": {
+        "type": "hadesarchitect-cassandra-datasource",
+        "uid": "PE3297E400DFF12FE"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hadesarchitect-cassandra-datasource",
+            "uid": "PE3297E400DFF12FE"
+          },
+          "target": "SELECT symbol, price, timestamp FROM crypto.price_ticks WHERE symbol = 'BTC/USDT' LIMIT 1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        }
+      }
+    },
+
+    {
+      "id": 9,
+      "title": "BTC/USDT — latest tick",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 32 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"BTC/USDT\"}",
+        "legendFormat": "BTC",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": { "mode": "fixed", "fixedColor": "orange" }
+        }
+      }
+    },
+
+    {
+      "id": 10,
+      "title": "ETH/USDT — latest tick",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 32 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"ETH/USDT\"}",
+        "legendFormat": "ETH",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": { "mode": "fixed", "fixedColor": "blue" }
+        }
+      }
+    },
+
+    {
+      "id": 14,
+      "title": "BNB/USDT — latest tick",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 8, "x": 0, "y": 36 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"BNB/USDT\"}",
+        "legendFormat": "BNB/USDT",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": { "mode": "fixed", "fixedColor": "yellow" }
+        }
+      }
+    },
+
+    {
+      "id": 15,
+      "title": "XRP/USDT — latest tick",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 8, "x": 8, "y": 36 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"XRP/USDT\"}",
+        "legendFormat": "XRP/USDT",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD"
+        }
+      }
+    },
+
+    {
+      "id": 16,
+      "title": "DOGE/USDT — latest tick",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 8, "x": 16, "y": 36 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"DOGE/USDT\"}",
+        "legendFormat": "DOGE/USDT",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD"
+        }
+      }
+    },
+
+    {
+      "id": 17,
+      "title": "SOL/USDT — latest tick",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 8, "x": 0, "y": 40 },
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "targets": [{
+        "expr": "crypto_price{symbol=\"SOL/USDT\"}",
+        "legendFormat": "SOL/USDT",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": { "mode": "fixed", "fixedColor": "green" }
+        }
+      }
+    }
+
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "tags": ["crypto", "streaming", "pipeline"],
+  "time": { "from": "now-30m", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Crypto Streaming Pipeline",
+  "uid": "crypto-pipeline-dashboard",
+  "version": 1
+}

@@ -1,0 +1,272 @@
+networks:
+  crypto_net:
+    driver: bridge
+
+volumes:
+  cassandra_data:
+  grafana_data:
+  prometheus_data:
+  kestra_data:
+
+services:
+
+  # ─────────────────────────────────────────
+  # REDPANDA (Kafka-compatible broker)
+  # ─────────────────────────────────────────
+  redpanda:
+    image: redpandadata/redpanda:latest
+    container_name: redpanda
+    command:
+      - redpanda
+      - start
+      - --smp 1
+      - --memory 512M
+      - --overprovisioned
+      - --kafka-addr PLAINTEXT://0.0.0.0:9092
+      - --advertise-kafka-addr PLAINTEXT://redpanda:9092
+      - --pandaproxy-addr 0.0.0.0:8082
+      - --schema-registry-addr 0.0.0.0:8081
+    ports:
+      - "9092:9092"    # Kafka API
+      - "8082:8082"    # Pandaproxy REST
+      - "8081:8081"    # Schema registry
+      - "9644:9644"    # Prometheus metrics
+    networks:
+      - crypto_net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "rpk", "cluster", "info"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  # ─────────────────────────────────────────
+  # REDPANDA CONSOLE (UI)
+  # ─────────────────────────────────────────
+  redpanda-console:
+    image: redpandadata/console:latest
+    container_name: redpanda-console
+    ports:
+      - "8086:8080"
+    environment:
+      - KAFKA_BROKERS=redpanda:9092
+    networks:
+      - crypto_net
+    depends_on:
+      - redpanda
+    restart: unless-stopped
+
+
+
+  # ─────────────────────────────────────────
+  # APACHE FLINK — Job Manager
+  # ─────────────────────────────────────────
+  flink-jobmanager:
+    build:
+      context: ./flink
+      dockerfile: Dockerfile
+    container_name: flink-jobmanager
+    command: jobmanager
+    ports:
+      - "8083:8081"    # Flink Web UI
+      - "9249:9249"    # Prometheus metrics
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=flink-jobmanager
+    volumes:
+      - ./flink/jobs:/opt/flink/jobs          # your job scripts
+      - ./flink/conf/flink-conf.yaml:/opt/flink/conf/flink-conf.yaml
+      - ./duckdb/data:/data                   # DuckDB file access
+    networks:
+      - crypto_net
+    restart: unless-stopped
+    depends_on:
+      redpanda:
+        condition: service_healthy
+
+  # ─────────────────────────────────────────
+  # APACHE FLINK — Task Manager
+  # ─────────────────────────────────────────
+  flink-taskmanager:
+    build:
+      context: ./flink
+      dockerfile: Dockerfile
+    container_name: flink-taskmanager
+    command: taskmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=flink-jobmanager
+    volumes:
+      - ./flink/jobs:/opt/flink/jobs
+      - ./flink/conf/flink-conf.yaml:/opt/flink/conf/flink-conf.yaml
+      - ./duckdb/data:/data                   # DuckDB file access
+    networks:
+      - crypto_net
+    restart: unless-stopped
+    depends_on:
+      - flink-jobmanager
+
+
+  # ─────────────────────────────────────────
+  # APACHE FLINK - JOB RUNNER
+  # ─────────────────────────────────────────
+  flink-job:
+    build:
+      context: ./flink
+      dockerfile: Dockerfile
+    container_name: flink-job
+    ports:
+      - "8001:8001"
+    command: python /opt/flink/jobs/crypto_job.py
+    environment:
+      - REDPANDA_BROKER=redpanda:9092
+      - KAFKA_TOPIC=crypto-raw-ticks
+      - CASSANDRA_HOST=cassandra
+      - DUCKDB_PATH=/data/crypto_history.duckdb
+      - KAFKA_GROUP_ID=flink-consumer
+      - GCS_BUCKET=de-zoomcamp-2026-485916-crypto-data-lake
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/gcp-credentials.json
+    volumes:
+      - ./flink/jobs:/opt/flink/jobs
+      - ./duckdb/data:/data
+      - ./gcp-credentials.json:/app/gcp-credentials.json:ro
+    networks:
+      - crypto_net
+    restart: unless-stopped
+    depends_on:
+      - flink-jobmanager
+      - flink-taskmanager
+      - cassandra
+      - redpanda
+
+  # ─────────────────────────────────────────
+  # APACHE CASSANDRA
+  # ─────────────────────────────────────────
+  cassandra:
+    image: cassandra:4.1
+    container_name: cassandra
+    ports:
+      - "9042:9042"
+    environment:
+      - CASSANDRA_CLUSTER_NAME=crypto_cluster
+      - CASSANDRA_DC=dc1
+      - CASSANDRA_ENDPOINT_SNITCH=SimpleSnitch
+    volumes:
+      - cassandra_data:/var/lib/cassandra           # persist data
+      - ./cassandra/init:/docker-entrypoint-initdb.d # auto-run schema.cql
+    networks:
+      - crypto_net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "cqlsh", "-e", "describe keyspaces"]
+      interval: 30s
+      timeout: 10s
+      retries: 8
+
+  # ─────────────────────────────────────────
+  # PYTHON PRODUCER
+  # ─────────────────────────────────────────
+  producer:
+    build:
+      context: ./producer
+      dockerfile: Dockerfile
+    container_name: crypto_producer
+    ports:
+      - "8000:8000"    # Prometheus metrics endpoint
+    environment:
+      - REDPANDA_BROKER=redpanda:9092
+      - CRYPTO_SYMBOLS=BTC/USDT,ETH/USDT,SOL/USDT,BNB/USDT,XRP/USDT,DOGE/USDT # comma-separated list of symbols to track - add more coins
+      - FETCH_INTERVAL_MS=500
+    volumes:
+      - ./producer:/app   # live code reload during development
+    networks:
+      - crypto_net
+    restart: unless-stopped
+    depends_on:
+      redpanda:
+        condition: service_healthy
+
+  # ─────────────────────────────────────────
+  # PROMETHEUS
+  # ─────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro                               # scrape config
+      - prometheus_data:/prometheus                                                                          # metrics history
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=15d
+    networks:
+      - crypto_net
+    restart: unless-stopped
+    depends_on:
+      - redpanda
+      - flink-jobmanager
+      - cassandra
+      - producer
+
+  # ─────────────────────────────────────────
+  # GRAFANA
+  # ─────────────────────────────────────────
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=hadesarchitect-cassandra-datasource  # Cassandra plugin for Grafana
+      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=hadesarchitect-cassandra-datasource # allow unsigned plugin
+      - GF_SMTP_ENABLED=true
+      - GF_SMTP_HOST=smtp.gmail.com:587
+      - GF_SMTP_USER=pranadot@gmail.com
+      - GF_SMTP_PASSWORD=rwuv uehh bwpd hllv
+      - GF_SMTP_FROM_ADDRESS=pranadot@gmail.com
+      - GF_SMTP_FROM_NAME=Crypto Pipeline Alerts
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/config/grafana.ini:/etc/grafana/grafana.ini
+    networks:
+      - crypto_net
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+      - cassandra
+
+  # ─────────────────────────────────────────
+  # KESTRA (Orchestration)
+  # ─────────────────────────────────────────
+  kestra:
+    image: kestra/kestra:latest
+    container_name: kestra
+    hostname: kestra
+    ports:
+      - "8085:8080"   # Kestra UI
+      - "8084:8084"   # Kestra management/health API
+    environment:
+      KESTRA_CONFIGURATION: |
+        kestra:
+          storage:
+            type: local
+            local:
+              base-path: /app/storage
+          queue:
+            type: h2
+          repository:
+            type: h2
+          h2:
+            enabled: true
+    volumes:
+      - kestra_data:/app/storage
+      - ./kestra/flows:/app/flows        # your pipeline flow definitions
+      - /var/run/docker.sock:/var/run/docker.sock  # lets Kestra trigger Docker
+    networks:
+      - crypto_net
+    restart: unless-stopped
+    command: server standalone --flow-path /app/flows

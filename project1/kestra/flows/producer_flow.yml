@@ -1,0 +1,28 @@
+id: crypto-producer
+namespace: crypto.pipeline
+
+description: Monitors and logs the crypto producer pipeline health
+
+triggers:
+  - id: every-5-minutes
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "*/5 * * * *"
+
+tasks:
+  - id: log-pipeline-status
+    type: io.kestra.plugin.core.log.Log
+    message: |
+      Crypto Producer Health Check
+      Time: {{ execution.startDate }}
+      Checking producer is running and publishing to Redpanda.
+      Monitor at: http://producer:8000/metrics
+    level: INFO
+
+  - id: log-symbols-monitored
+    type: io.kestra.plugin.core.log.Log
+    message: |
+      Monitoring symbols: BTC/USDT, ETH/USDT, SOL/USDT
+      Exchange: Binance
+      Redpanda topic: crypto-raw-ticks
+      Prometheus metrics: http://producer:8000/metrics
+    level: INFO

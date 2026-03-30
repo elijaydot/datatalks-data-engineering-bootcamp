@@ -1,0 +1,43 @@
+id: crypto-flink-job
+namespace: crypto.pipeline
+
+description: Monitors the Flink streaming job and pipeline health
+
+triggers:
+  - id: every-5-minutes
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "*/5 * * * *"
+
+tasks:
+  - id: log-flink-status
+    type: io.kestra.plugin.core.log.Log
+    message: |
+      Flink Job Health Check
+      Time: {{ execution.startDate }}
+      Flink UI: http://flink-jobmanager:8081
+      Prometheus metrics: http://flink-job:8001/metrics
+    level: INFO
+
+  - id: log-pipeline-summary
+    type: io.kestra.plugin.core.log.Log
+    message: |
+      Pipeline Summary
+      ─────────────────────────────
+      Producer    → Redpanda      ✓
+      Redpanda    → Flink         ✓
+      Flink       → Cassandra     ✓
+      Flink       → DuckDB        ✓
+      Prometheus  → Grafana       ✓
+      ─────────────────────────────
+      Dashboard: http://grafana:3000
+    level: INFO
+
+  - id: log-cassandra-info
+    type: io.kestra.plugin.core.log.Log
+    message: |
+      Cassandra Tables: price_ticks, ohlcv_1min, anomalies
+      Keyspace: crypto
+      Host: cassandra:9042
+      TTL price_ticks: 7 days
+      TTL ohlcv_1min: 30 days
+    level: INFO

@@ -1,0 +1,42 @@
+# Secrets and local environment
+.env
+.env.*
+
+# Python caches and environments
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Local database artifacts
+duckdb/data/*.wal
+
+# Editor and local tool state
+.cassandraWorkbench/
+.vscode/
+.idea/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# GCP credentials — NEVER commit
+gcp-credentials.json
+*.json.key
+
+# Terraform state
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform.lock.hcl
+
+# DuckDB data
+duckdb/data/*.duckdb
+
+# Environment
+.env

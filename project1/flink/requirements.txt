@@ -1,0 +1,6 @@
+apache-flink==1.18.0
+cassandra-driver==3.29.0
+duckdb==0.10.0
+confluent-kafka==2.3.0
+prometheus-client==0.20.0
+google-cloud-storage==2.14.0
