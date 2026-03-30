@@ -197,9 +197,11 @@ project1/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/elijaydot/project1-crypto-streaming-pipeline.git
+git clone https://github.com/elijaydot/datatalks-data-engineering-bootcamp/tree/main/project1.git
 cd project1-crypto-streaming-pipeline
 ```
+
+
 
 ### 2. Configure environment variables
 
