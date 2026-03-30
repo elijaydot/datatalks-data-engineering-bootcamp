@@ -1,7 +1,7 @@
 # Crypto Streaming Pipeline
+---
 
 A production-grade real-time data engineering pipeline that streams live cryptocurrency market data from Binance, processes it through Apache Flink, stores it in Cassandra and DuckDB, exports to a GCS data lake, and visualises everything in a live Grafana dashboard — all containerised with Docker Compose and cloud-provisioned with Terraform.
----
 
 Problem Statement
 Cryptocurrency markets operate 24/7, generating thousands of price events per second across hundreds of trading pairs. Traditional batch ETL pipelines are fundamentally unsuited to this domain — a job running hourly misses rapid price movements, anomalies, and trading signals that matter most in real time.

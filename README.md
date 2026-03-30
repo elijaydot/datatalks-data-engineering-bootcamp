@@ -17,7 +17,7 @@ Here you'll find code, notes, and solutions for each module as I progress throug
 | **Week 5** | **Batch Processing (Bruin & DuckDB)** | ✅ Done | [View Folder](./week5/) |
 | **Week 6** | **Batch Processing with Spark** | ✅ Done | [View Folder](./week6/) |
 | **Week 7** | **Stream Processing with Kafka & Flink** | ✅ Done | [View Folder](./week7/) |
-| **Week 8** | Project | ⏳ Pending | - |
+| **Week 8** | **Project - Crypto Streaming Pipeline** | ✅ Done | [View Folder](./project1/) |
 
 ---
 
@@ -94,6 +94,17 @@ In week seven, I built a full real-time processing pipeline for NYC taxi events 
 - **Homework Execution**: Solved Q1–Q6 using green taxi October 2025 data, including distance filters, location-based windows, session analysis, and hourly tip aggregation.
 - **Operational Learnings**: Documented key production-like issues and fixes, including `NaN -> null` JSON handling, single-partition parallelism (`-p 1`), watermark behavior, and safe rerun/reset workflow.
 
+### [Week 8: Project - Crypto Streaming Pipeline](./project1/)
+> **Focus**: Real-Time Streaming Architecture, Flink ETL, Cassandra Modeling, Monitoring & Alerting, GCP IaC
+
+In the capstone project, I built and operated a production-style crypto market streaming pipeline end-to-end.
+- **Live Data Ingestion**: Streamed Binance market ticks (~500ms cadence) with Python producers, schema validation, and Kafka-compatible transport via Redpanda.
+- **Streaming Processing**: Implemented Flink-based ETL for parsing, stale-event filtering, deduplication, normalization, anomaly detection, and 1-minute OHLCV window aggregation.
+- **Multi-Store Serving Pattern**: Wrote low-latency operational data to Cassandra (query-pattern-based tables with TTL) and analytical history to DuckDB, with export of curated outputs to GCS.
+- **Cloud & Infra Automation**: Provisioned GCP resources (VM, bucket, firewall) using Terraform for reproducible infrastructure setup.
+- **Observability & Reliability**: Added Prometheus metrics, Grafana dashboards, and alerting channels to monitor throughput, errors, service health, and market anomalies.
+- **Platform Orchestration**: Used Docker Compose to run the full local stack and Kestra flows for scheduled health checks and operational workflows.
+
 ---
 
 ## Tech Stack
@@ -102,6 +113,7 @@ In week seven, I built a full real-time processing pipeline for NYC taxi events 
 - **Containerization**: Docker, Docker Compose
 - **Infrastructure**: Terraform
 - **Cloud**: Google Cloud Platform (GCP)
-- **Database**: PostgreSQL, BigQuery, DuckDB
+- **Database**: PostgreSQL, BigQuery, DuckDB, Cassandra
 - **Streaming**: Apache Flink (PyFlink), Redpanda/Kafka
+- **Monitoring & Orchestration**: Prometheus, Grafana, Kestra
 - **Tools**: pgAdmin, uv
